@@ -14,6 +14,7 @@ import TwentySixReasons from "./components/TwentySixReasons";
 import FinalSection from "./components/FinalSection";
 import CatCompanion from "./components/CatCompanion";
 import KonamiCode from "./components/KonamiCode";
+import DoodleLayer from "./components/DoodleLayer";
 
 const ParticleCanvas = dynamic(() => import("./components/ParticleCanvas"), { ssr: false });
 const LenisProvider = dynamic(() => import("./components/LenisProvider"), { ssr: false });
@@ -22,12 +23,25 @@ export default function Home() {
   const [landingDone, setLandingDone] = useState(false);
   const [key, setKey] = useState(0);
   const bgAudioRef = useRef<HTMLAudioElement>(null);
+  const bdayAudioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    if (landingDone && bgAudioRef.current) {
-      bgAudioRef.current.play().catch(() => {});
+    if (landingDone) {
+      if (bdayAudioRef.current) {
+        bdayAudioRef.current.pause();
+        bdayAudioRef.current.currentTime = 0;
+      }
+      if (bgAudioRef.current) {
+        bgAudioRef.current.play().catch(() => {});
+      }
     }
   }, [landingDone]);
+
+  const handleLandingBegin = useCallback(() => {
+    if (bdayAudioRef.current) {
+      bdayAudioRef.current.play().catch(() => {});
+    }
+  }, []);
 
   const handleLandingComplete = useCallback(() => {
     setLandingDone(true);
@@ -41,6 +55,7 @@ export default function Home() {
 
   return (
     <LenisProvider>
+      <audio ref={bdayAudioRef} src="/music/bday-song.mp3" style={{ display: "none" }} />
       <audio ref={bgAudioRef} src="/music/the-night-we-met.mp3" loop style={{ display: "none" }} />
       <main className="relative min-h-screen" style={{ background: "#070410" }}>
         {/* Ambient particles */}
@@ -48,10 +63,12 @@ export default function Home() {
 
         {/* Landing cinematic */}
         {!landingDone && (
-          <LandingSequence key={key} onComplete={handleLandingComplete} />
+          <LandingSequence key={key} onComplete={handleLandingComplete} onBegin={handleLandingBegin} />
         )}
 
         {/* Main content */}
+        {landingDone && <DoodleLayer />}
+
         {landingDone && (
           <div className="relative z-10">
             <HeroSection />

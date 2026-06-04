@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tanu — Chapter 26",
+  title: "Tanu Chapter 26",
   description: "A digital birthday story crafted with love.",
   openGraph: {
-    title: "Tanu — Chapter 26",
+    title: "Tanu Chapter 26",
     description: "A digital birthday story crafted with love.",
     type: "website",
   },
