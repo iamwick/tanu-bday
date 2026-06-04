@@ -19,7 +19,7 @@ const reasons = [
   "You're memorable.",
   "You're stubborn in a cute way.",
   "You make people feel seen.",
-  "You listen — really listen.",
+  "You listen, really listen.",
   "You're honest.",
   "You find beauty in small things.",
   "You're loyal.",
@@ -36,7 +36,7 @@ const reasons = [
   "You've survived every hard day so far.",
   "You make the world a warmer place.",
   "You're exactly who you need to be right now.",
-  "You exist — and that alone is enough reason to celebrate.",
+  "You exist, and that alone is enough reason to celebrate.",
 ];
 
 export default function TwentySixReasons() {

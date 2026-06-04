@@ -130,7 +130,7 @@ body {
   background-clip: text;
 }
 
-/* Doodle layer — responsive scaling */
+/* Doodle layer - responsive scaling */
 .doodle-wrap {
   transform: scale(0.65);
   transform-origin: left top;
@@ -154,7 +154,7 @@ body {
   }
 }
 
-/* Gradient utilities — all white-based */
+/* Gradient utilities - all white-based */
 .text-gradient-sunset {
   background: linear-gradient(135deg, #ffffff, #d0d0d0);
   -webkit-background-clip: text;

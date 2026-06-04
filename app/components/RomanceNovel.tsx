@@ -107,7 +107,7 @@ export default function RomanceNovel() {
             border: "1px solid rgba(255,255,255,0.05)",
           }} />
 
-          {/* Main page — light background, dark text */}
+          {/* Main page - light background, dark text */}
           <div style={{
             position: "relative",
             overflow: "hidden",

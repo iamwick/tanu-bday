@@ -25,11 +25,11 @@ const QUOTES = [
   { cat: "=^•ω•^=", text: "Radiates main character energy without even trying" },
   { cat: "ฅ(^ᵕ^)ฅ", text: "Probably has 47 tabs open and knows what's in each one" },
   { cat: "(^•ㅅ•^)", text: "The person you call when everything feels impossible" },
-  { cat: "~(=^◡^=)", text: "Her kindness is not a weakness — it's a superpower" },
+  { cat: "~(=^◡^=)", text: "Her kindness is not a weakness, it's a superpower" },
   { cat: "ฅ^⊙ω⊙^ฅ", text: "Makes 26 look like the coolest age to be" },
   { cat: "(=^ω^=)", text: "Her playlists go so hard it should be illegal" },
   { cat: "^(=•ω•=)^", text: "Lowkey the reason several people have better taste now" },
-  { cat: "ฅ(=^◕ᴥ◕^=)", text: "Genuinely irreplaceable — not just because of the snacks" },
+  { cat: "ฅ(=^◕ᴥ◕^=)", text: "Genuinely irreplaceable, not just because of the snacks" },
   { cat: "(^˘ᵕ˘^)", text: "The world is statistically better with her in it" },
   { cat: "~(=^‿^)", text: "Should come with a warning: may cause uncontrollable happiness" },
   { cat: "(=^._.^)", text: "Always the vibe. Never the villain." },
@@ -400,7 +400,7 @@ export default function DoodleLayer() {
 
   return (
     <>
-      {/* Doodles — visible on all screens, scaled for mobile */}
+      {/* Doodles - visible on all screens, scaled for mobile */}
       <div
         className="absolute inset-0 z-20"
         style={{ pointerEvents: "none" }}

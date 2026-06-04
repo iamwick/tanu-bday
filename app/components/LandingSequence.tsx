@@ -177,7 +177,7 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
             </div>
           ))}
 
-          {/* Sunrise phase — fade from black to slightly lighter black */}
+          {/* Sunrise phase - fade from black to slightly lighter black */}
           {phase === "sunrise" && (
             <motion.div
               className="absolute inset-0"
@@ -188,7 +188,7 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
             />
           )}
 
-          {/* Cakes — slide in from sides, shown during entry */}
+          {/* Cakes - slide in from sides, shown during entry */}
           <AnimatePresence>
             {showEntry && (
               <>
