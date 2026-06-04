@@ -49,15 +49,15 @@ export default function FinalSection({ onReplay }: { onReplay: () => void }) {
     if (!inView) return;
 
     lines.forEach((_, i) => {
-      setTimeout(() => setVisibleLines((prev) => [...prev, i]), 800 + i * 1800);
+      setTimeout(() => setVisibleLines((prev) => [...prev, i]), 300 + i * 600);
     });
 
     const lanternTimer = setTimeout(() => {
       setShowLanterns(true);
       spawnLanterns();
-    }, 800 + lines.length * 1800);
+    }, 300 + lines.length * 600);
 
-    const replayTimer = setTimeout(() => setShowReplay(true), 800 + lines.length * 1800 + 2000);
+    const replayTimer = setTimeout(() => setShowReplay(true), 300 + lines.length * 600 + 1200);
 
     return () => {
       clearTimeout(lanternTimer);
@@ -130,14 +130,15 @@ export default function FinalSection({ onReplay }: { onReplay: () => void }) {
                 <motion.p
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, ease: "easeOut" }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                   className={i === 5 ? "text-gradient-birthday" : i === 4 ? "text-gradient-birthday-warm" : ""}
                   style={{
                     fontFamily: FONT,
                     fontSize: i === 5 ? "clamp(3rem, 14vw, 6rem)" : i === 4 ? "clamp(1.8rem, 5vw, 2.5rem)" : "clamp(1rem, 3vw, 1.4rem)",
                     fontWeight: i === 5 ? 800 : i === 4 ? 700 : i === 3 ? 300 : 400,
                     fontStyle: i === 6 ? "italic" : "normal",
-                    color: (i === 5 || i === 4) ? undefined : i === 6 ? "#c084fc" : "rgba(255,255,255,0.6)",
+                    color: (i === 5 || i === 4) ? undefined : i === 0 ? "#60a5fa" : i === 1 ? "#c084fc" : i === 2 ? "#f9a8d4" : i === 3 ? "rgba(255,255,255,0.55)" : i === 6 ? "#a78bfa" : "rgba(255,255,255,0.6)",
+                    textShadow: (i === 5 || i === 4) ? undefined : i === 0 ? "0 0 20px #60a5fa50" : i === 1 ? "0 0 20px #c084fc50" : i === 2 ? "0 0 20px #f9a8d450" : i === 6 ? "0 0 20px #a78bfa50" : undefined,
                     lineHeight: i === 5 ? 0.9 : 1.5,
                     letterSpacing: i === 5 ? "-0.02em" : "0",
                   }}

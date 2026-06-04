@@ -5,6 +5,11 @@ import { motion, useInView } from "framer-motion";
 
 const FONT = "'Press Start 2P', monospace";
 
+const PALETTE = [
+  "#ff6b9d", "#c084fc", "#fbbf24", "#34d399", "#60a5fa",
+  "#f87171", "#a78bfa", "#86efac", "#fcd34d", "#67e8f9",
+];
+
 const reasons = [
   "You're kind.",
   "You're genuine.",
@@ -48,7 +53,7 @@ export default function TwentySixReasons() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16" style={{ textAlign: "center" }}
         >
           <p className="mc-label" style={{
@@ -82,7 +87,7 @@ export default function TwentySixReasons() {
               key={i}
               initial={{ opacity: 0, scale: 0.8, y: 30 }}
               animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.04, duration: 0.5, type: "spring" }}
+              transition={{ delay: i * 0.025, duration: 0.3, type: "spring" }}
               whileHover={{ y: -6, scale: 1.03 }}
               style={{
                 cursor: "default",
@@ -99,9 +104,9 @@ export default function TwentySixReasons() {
                 <span style={{
                   fontFamily: "'Press Start 2P', monospace",
                   fontSize: "9px",
-                  color: "rgba(255,255,255,0.5)",
+                  color: PALETTE[i % PALETTE.length],
                   minWidth: "22px",
-                  textShadow: "1px 1px 0 #000",
+                  textShadow: `0 0 8px ${PALETTE[i % PALETTE.length]}60`,
                   flexShrink: 0,
                 }}>
                   {String(i + 1).padStart(2, "0")}
@@ -109,9 +114,9 @@ export default function TwentySixReasons() {
                 <span style={{
                   fontFamily: FONT,
                   fontSize: "13px",
-                  color: "rgba(255,255,255,0.9)",
+                  color: PALETTE[i % PALETTE.length],
                   fontWeight: 400,
-                  textShadow: "1px 1px 0 rgba(0,0,0,0.6)",
+                  textShadow: `0 0 12px ${PALETTE[i % PALETTE.length]}40`,
                 }}>
                   {reason}
                 </span>

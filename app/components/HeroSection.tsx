@@ -12,9 +12,9 @@ const CORNER_POSITIONS = [
 ];
 
 const STATS = [
-  { label: "Kind", value: "∞" },
-  { label: "Stubborn", value: "100" },
-  { label: "Loved", value: "∞" },
+  { label: "Kind", value: "∞", color: "#ff6b9d" },
+  { label: "Stubborn", value: "100", color: "#fbbf24" },
+  { label: "Loved", value: "∞", color: "#c084fc" },
 ];
 
 const FONT = "'Press Start 2P', monospace";
@@ -211,7 +211,8 @@ export default function HeroSection() {
                 fontFamily: FONT,
                 fontSize: "17px",
                 fontWeight: 700,
-                color: "rgba(255,255,255,0.85)",
+                color: stat.color,
+                textShadow: `0 0 12px ${stat.color}80`,
               }}>
                 {stat.value}
               </span>

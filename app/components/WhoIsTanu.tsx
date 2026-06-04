@@ -6,18 +6,18 @@ import { motion, useInView } from "framer-motion";
 const FONT = "'Press Start 2P', monospace";
 
 const traits = [
-  { word: "Kind.", delay: 0.1, color: "#ff6b9d" },
-  { word: "Emotional.", delay: 0.2, color: "#c084fc" },
-  { word: "Stubborn.", delay: 0.3, color: "#fbbf24" },
-  { word: "Thoughtful.", delay: 0.4, color: "#34d399" },
-  { word: "Hopeful.", delay: 0.5, color: "#60a5fa" },
+  { word: "Kind.", delay: 0.05, color: "#ff6b9d" },
+  { word: "Emotional.", delay: 0.1, color: "#c084fc" },
+  { word: "Stubborn.", delay: 0.15, color: "#fbbf24" },
+  { word: "Thoughtful.", delay: 0.2, color: "#34d399" },
+  { word: "Hopeful.", delay: 0.25, color: "#60a5fa" },
 ];
 
 const descriptions = [
-  "Someone who always tries to see the good in people.",
-  "Someone who connects with people effortlessly.",
-  "Someone who feels deeply.",
-  "Someone who cares more than she admits.",
+  { text: "Someone who always tries to see the good in people.", color: "#ff6b9d" },
+  { text: "Someone who connects with people effortlessly.", color: "#c084fc" },
+  { text: "Someone who feels deeply.", color: "#fbbf24" },
+  { text: "Someone who cares more than she admits.", color: "#34d399" },
 ];
 
 export default function WhoIsTanu() {
@@ -34,7 +34,7 @@ export default function WhoIsTanu() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-20" style={{ textAlign: "center" }}
         >
           <p className="mc-label" style={{
@@ -62,7 +62,7 @@ export default function WhoIsTanu() {
               key={trait.word}
               initial={{ opacity: 0, y: 40, scale: 0.9 }}
               animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ delay: trait.delay, duration: 0.8, type: "spring" }}
+              transition={{ delay: trait.delay, duration: 0.4, type: "spring" }}
               whileHover={{ y: -8, scale: 1.04 }}
               style={{
                 padding: "20px 32px",
@@ -95,18 +95,19 @@ export default function WhoIsTanu() {
               key={i}
               initial={{ opacity: 0, x: i % 2 === 0 ? -24 : 24 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.6 + i * 0.15, duration: 0.8 }}
+              transition={{ delay: 0.2 + i * 0.07, duration: 0.4 }}
               style={{
                 fontFamily: FONT,
                 fontSize: "clamp(1rem, 2.5vw, 1.2rem)",
                 fontStyle: "italic",
                 fontWeight: 300,
-                color: "rgba(255,255,255,0.5)",
+                color: desc.color,
+                textShadow: `0 0 24px ${desc.color}50`,
                 textAlign: "center",
                 maxWidth: "480px",
               }}
             >
-              {desc}
+              {desc.text}
             </motion.p>
           ))}
         </div>

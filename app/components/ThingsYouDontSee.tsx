@@ -6,14 +6,14 @@ import { motion, useInView } from "framer-motion";
 const FONT = "'Press Start 2P', monospace";
 
 const cards = [
-  { text: "You make people comfortable.", icon: "✦" },
-  { text: "You look for the best in people.", icon: "◈" },
-  { text: "You make conversations feel effortless.", icon: "✦" },
-  { text: "You make people feel understood.", icon: "◈" },
-  { text: "You carry more strength than you realize.", icon: "✦" },
-  { text: "You care deeply even when it hurts.", icon: "◈" },
-  { text: "You bring warmth into ordinary moments.", icon: "✦" },
-  { text: "You leave an impression long after conversations end.", icon: "◈" },
+  { text: "You make people comfortable.", icon: "✦", color: "#ff6b9d" },
+  { text: "You look for the best in people.", icon: "◈", color: "#c084fc" },
+  { text: "You make conversations feel effortless.", icon: "✦", color: "#fbbf24" },
+  { text: "You make people feel understood.", icon: "◈", color: "#34d399" },
+  { text: "You carry more strength than you realize.", icon: "✦", color: "#60a5fa" },
+  { text: "You care deeply even when it hurts.", icon: "◈", color: "#f87171" },
+  { text: "You bring warmth into ordinary moments.", icon: "✦", color: "#a78bfa" },
+  { text: "You leave an impression long after conversations end.", icon: "◈", color: "#fcd34d" },
 ];
 
 export default function ThingsYouDontSee() {
@@ -30,7 +30,7 @@ export default function ThingsYouDontSee() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-6" style={{ textAlign: "center" }}
         >
           <p className="mc-label" style={{
@@ -55,7 +55,7 @@ export default function ThingsYouDontSee() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.4, duration: 1 }}
+          transition={{ delay: 0.15, duration: 0.4 }}
           style={{
             fontFamily: FONT,
             fontSize: "clamp(1rem, 2.5vw, 1.15rem)",
@@ -79,7 +79,7 @@ export default function ThingsYouDontSee() {
               key={i}
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + i * 0.1, duration: 0.7, type: "spring" }}
+              transition={{ delay: 0.1 + i * 0.05, duration: 0.35, type: "spring" }}
               whileHover={{ y: -4, scale: 1.01 }}
               className="group relative overflow-hidden cursor-default"
               style={{
@@ -95,15 +95,16 @@ export default function ThingsYouDontSee() {
                 background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)"
               }} />
               <div className="flex items-start gap-4">
-                <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "16px", marginTop: "2px", flexShrink: 0 }}>
+                <span style={{ color: card.color, fontSize: "16px", marginTop: "2px", flexShrink: 0, textShadow: `0 0 10px ${card.color}80` }}>
                   {card.icon}
                 </span>
                 <p style={{
                   fontFamily: FONT,
                   fontSize: "15px",
-                  color: "rgba(255,255,255,0.75)",
+                  color: card.color,
                   lineHeight: 1.7,
                   fontWeight: 400,
+                  textShadow: `0 0 14px ${card.color}30`,
                 }}>
                   {card.text}
                 </p>

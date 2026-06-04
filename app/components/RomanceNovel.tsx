@@ -60,7 +60,7 @@ export default function RomanceNovel() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-12" style={{ textAlign: "center" }}
         >
           <p style={{
@@ -88,7 +88,7 @@ export default function RomanceNovel() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3, duration: 1 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
           style={{ position: "relative" }}
         >
           {/* Shadow pages */}

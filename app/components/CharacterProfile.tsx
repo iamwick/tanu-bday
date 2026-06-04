@@ -6,20 +6,20 @@ import { motion, useInView } from "framer-motion";
 const FONT = "'Press Start 2P', monospace";
 
 const attributes = [
-  { name: "Kindness", value: 100 },
-  { name: "Empathy", value: 100 },
-  { name: "Stubbornness", value: 95 },
-  { name: "Humor", value: 85 },
-  { name: "Emotional Damage", value: 90 },
-  { name: "Ability to Connect", value: 100 },
+  { name: "Kindness", value: 100, color: "#ff6b9d" },
+  { name: "Empathy", value: 100, color: "#c084fc" },
+  { name: "Stubbornness", value: 95, color: "#fbbf24" },
+  { name: "Humor", value: 85, color: "#34d399" },
+  { name: "Emotional Damage", value: 90, color: "#60a5fa" },
+  { name: "Ability to Connect", value: 100, color: "#f9a8d4" },
 ];
 
 const achievements = [
-  "Survived difficult chapters",
-  "Believed in people",
-  "Made countless people smile",
-  "Continued moving forward",
-  "Reached Level 26",
+  { text: "Survived difficult chapters", color: "#f87171" },
+  { text: "Believed in people", color: "#c084fc" },
+  { text: "Made countless people smile", color: "#fbbf24" },
+  { text: "Continued moving forward", color: "#34d399" },
+  { text: "Reached Level 26", color: "#ff6b9d" },
 ];
 
 export default function CharacterProfile() {
@@ -44,7 +44,7 @@ export default function CharacterProfile() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-12" style={{ textAlign: "center" }}
         >
           <p className="mc-label" style={{
@@ -67,7 +67,7 @@ export default function CharacterProfile() {
         <motion.div
           initial={{ opacity: 0, y: 40, rotateX: 8 }}
           animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-          transition={{ delay: 0.3, duration: 1, type: "spring" }}
+          transition={{ delay: 0.1, duration: 0.5, type: "spring" }}
           style={{
             border: "1px solid rgba(255,255,255,0.1)",
             background: "#0d0d0d",
@@ -170,16 +170,17 @@ export default function CharacterProfile() {
                     key={attr.name}
                     initial={{ opacity: 0, x: -20 }}
                     animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.5 + i * 0.1, duration: 0.6 }}
+                    transition={{ delay: 0.2 + i * 0.05, duration: 0.35 }}
                     style={{ display: "flex", alignItems: "center", gap: "16px" }}
                   >
                     <span style={{
                       fontFamily: FONT,
                       fontSize: "13px",
-                      color: "rgba(255,255,255,0.5)",
+                      color: attr.color,
                       width: "144px",
                       flexShrink: 0,
                       fontWeight: 400,
+                      textShadow: `0 0 12px ${attr.color}50`,
                     }}>
                       {attr.name}
                     </span>
@@ -190,17 +191,17 @@ export default function CharacterProfile() {
                       overflow: "hidden",
                     }}>
                       <motion.div
-                        style={{ background: "rgba(255,255,255,0.7)", height: "100%" }}
+                        style={{ background: attr.color, height: "100%", boxShadow: `0 0 8px ${attr.color}80` }}
                         initial={{ width: 0 }}
                         animate={inView ? { width: `${attr.value}%` } : {}}
-                        transition={{ delay: 0.7 + i * 0.1, duration: 1, ease: "easeOut" }}
+                        transition={{ delay: 0.3 + i * 0.05, duration: 0.5, ease: "easeOut" }}
                       />
                     </div>
                     <span style={{
                       fontFamily: FONT,
                       fontSize: "13px",
                       fontWeight: 600,
-                      color: "rgba(255,255,255,0.7)",
+                      color: attr.color,
                       flexShrink: 0,
                     }}>
                       {attr.value}
@@ -229,16 +230,17 @@ export default function CharacterProfile() {
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
                     animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 1 + i * 0.1, duration: 0.5 }}
+                    transition={{ delay: 0.4 + i * 0.05, duration: 0.3 }}
                     style={{ display: "flex", alignItems: "center", gap: "12px" }}
                   >
-                    <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px" }}>✓</span>
+                    <span style={{ color: a.color, fontSize: "12px", textShadow: `0 0 8px ${a.color}80` }}>✓</span>
                     <span style={{
                       fontFamily: FONT,
                       fontSize: "13px",
-                      color: "rgba(255,255,255,0.6)",
+                      color: a.color,
                       fontWeight: 400,
-                    }}>{a}</span>
+                      textShadow: `0 0 10px ${a.color}40`,
+                    }}>{a.text}</span>
                   </motion.div>
                 ))}
               </div>

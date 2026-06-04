@@ -7,11 +7,11 @@ import Image from "next/image";
 const FONT = "'Press Start 2P', monospace";
 
 const lines = [
-  { text: "When I first met you...", delay: 0 },
-  { text: "You were incredibly shy.", delay: 1800 },
-  { text: "You wouldn't even show me your face.", delay: 3800 },
-  { text: "And somehow...", delay: 6000 },
-  { text: "I'm really glad you eventually did.", delay: 7800 },
+  { text: "When I first met you...", delay: 0, color: "rgba(255,255,255,0.6)" },
+  { text: "You were incredibly shy.", delay: 1800, color: "#c084fc" },
+  { text: "You wouldn't even show me your face.", delay: 3800, color: "#60a5fa" },
+  { text: "And somehow...", delay: 6000, color: "rgba(255,255,255,0.6)" },
+  { text: "I'm really glad you eventually did.", delay: 7800, color: "#ff6b9d" },
 ];
 
 export default function ShyGirl() {
@@ -68,7 +68,8 @@ export default function ShyGirl() {
                 fontFamily: FONT,
                 fontSize: i === 4 ? "clamp(1.3rem, 4vw, 1.8rem)" : "clamp(1.1rem, 3vw, 1.5rem)",
                 fontWeight: i === 4 ? 600 : 400,
-                color: i === 4 ? "#ffffff" : "rgba(255,255,255,0.6)",
+                color: line.color,
+                textShadow: i === 4 ? `0 0 20px ${line.color}80` : `0 0 14px ${line.color}40`,
                 lineHeight: 1.6,
                 marginBottom: "16px",
               }}
