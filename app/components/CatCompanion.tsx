@@ -101,8 +101,8 @@ export default function CatCompanion() {
               exit={{ opacity: 0, scale: 0.8, y: 4 }}
               className="absolute pointer-events-none"
               style={{
-                [catSide === "right" ? "right" : "left"]: "56px",
-                bottom: "8px",
+                bottom: "124px",
+                [catSide === "right" ? "right" : "left"]: "-8px",
                 width: "200px",
               }}
             >
@@ -124,15 +124,16 @@ export default function CatCompanion() {
                 }}>
                   {message}
                 </p>
+                {/* Arrow pointing down toward the cat */}
                 <div style={{
                   position: "absolute",
-                  bottom: "12px",
-                  [catSide === "right" ? "right" : "left"]: "-6px",
+                  bottom: "-6px",
+                  [catSide === "right" ? "right" : "left"]: "20px",
                   width: 0,
                   height: 0,
-                  borderTop: "5px solid transparent",
-                  borderBottom: "5px solid transparent",
-                  [catSide === "right" ? "borderLeft" : "borderRight"]: "6px solid rgba(8,8,8,0.92)",
+                  borderLeft: "5px solid transparent",
+                  borderRight: "5px solid transparent",
+                  borderTop: "6px solid rgba(8,8,8,0.92)",
                 }} />
               </div>
             </motion.div>
