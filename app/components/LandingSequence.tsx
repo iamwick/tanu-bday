@@ -18,11 +18,12 @@ const lines = [
 
 const FONT = "'Press Start 2P', monospace";
 
-function CakeSVG({ flip }: { flip: boolean }) {
+function CakeSVG({ flip, size = 220 }: { flip: boolean; size?: number }) {
+  const h = Math.round(260 * (size / 220));
   return (
     <svg
-      width="220"
-      height="260"
+      width={size}
+      height={h}
       viewBox="0 0 220 260"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -94,6 +95,22 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
   const [phase, setPhase] = useState<"entry" | "sunrise" | "text" | "done">("entry");
   const [lineIndex, setLineIndex] = useState(-1);
   const [showEntry, setShowEntry] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    const update = () => setWindowWidth(window.innerWidth);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const cakeSize = windowWidth > 0 && windowWidth < 480 ? 110 : windowWidth < 768 ? 154 : 220;
+  const cakeOffset =
+    windowWidth > 0 && windowWidth < 480
+      ? "calc(50% - 185px)"
+      : windowWidth < 768
+      ? "calc(50% - 290px)"
+      : "calc(50% - 360px)";
 
   const handleBegin = useCallback(() => {
     onBegin?.();
@@ -177,9 +194,9 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.4, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ position: "absolute", left: "calc(50% - 360px)", top: "50%", transform: "translateY(-50%)", zIndex: 20 }}
+                  style={{ position: "absolute", left: cakeOffset, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}
                 >
-                  <CakeSVG flip={false} />
+                  <CakeSVG flip={false} size={cakeSize} />
                 </motion.div>
                 <motion.div
                   key="cake-right"
@@ -187,9 +204,9 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.4, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ position: "absolute", right: "calc(50% - 360px)", top: "50%", transform: "translateY(-50%)", zIndex: 20 }}
+                  style={{ position: "absolute", right: cakeOffset, top: "50%", transform: "translateY(-50%)", zIndex: 20 }}
                 >
-                  <CakeSVG flip={true} />
+                  <CakeSVG flip={true} size={cakeSize} />
                 </motion.div>
               </>
             )}
