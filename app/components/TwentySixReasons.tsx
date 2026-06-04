@@ -57,15 +57,16 @@ export default function TwentySixReasons() {
           }}>
             A List
           </p>
-          <h2 style={{
-            fontFamily: "'Press Start 2P', monospace",
-            fontSize: "clamp(1.4rem, 4vw, 2.5rem)",
-            fontWeight: 400,
-            color: "#ffffff",
-            marginBottom: "16px",
-            textShadow: "4px 4px 0 #000",
-            lineHeight: 1.4,
-          }}>
+          <h2
+            className="text-gradient-birthday"
+            style={{
+              fontFamily: "'Press Start 2P', monospace",
+              fontSize: "clamp(1.4rem, 4vw, 2.5rem)",
+              fontWeight: 400,
+              marginBottom: "16px",
+              lineHeight: 1.4,
+            }}
+          >
             26 Reasons
           </h2>
           <p className="mc-label" style={{

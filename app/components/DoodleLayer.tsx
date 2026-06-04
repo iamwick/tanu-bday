@@ -348,40 +348,49 @@ export default function DoodleLayer() {
 
   return (
     <>
-      {/* Doodles — only shown on xl+ screens where margins exist */}
+      {/* Doodles — visible on all screens, scaled for mobile */}
       <div
-        className="hidden xl:block absolute inset-0 z-20"
+        className="absolute inset-0 z-20"
         style={{ pointerEvents: "none" }}
       >
         {DOODLES.map((d) => {
           const Comp = DOODLE_COMPONENTS[d.type];
+          const isRight = "right" in d.pos;
           return (
-            <motion.button
+            <div
               key={d.id}
+              className={isRight ? "doodle-wrap-right" : "doodle-wrap"}
               style={{
                 position: "absolute",
                 ...d.pos,
-                background: "none",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-                pointerEvents: "auto",
-                filter: `drop-shadow(0 0 6px ${d.color}50)`,
-                rotate: d.rotate,
               }}
-              animate={{ y: [0, -9, 0] }}
-              transition={{
-                duration: 3.5 + d.delay * 0.3,
-                delay: d.delay,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              whileHover={{ scale: 1.2 }}
-              onClick={() => handleClick(d.quoteIdx, d.color)}
-              title="click me!"
             >
-              <Comp color={d.color} />
-            </motion.button>
+              <div style={{ transform: `rotate(${d.rotate}deg)` }}>
+                <motion.button
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    cursor: "pointer",
+                    pointerEvents: "auto",
+                    filter: `drop-shadow(0 0 6px ${d.color}50)`,
+                    display: "block",
+                  }}
+                  animate={{ y: [0, -9, 0] }}
+                  transition={{
+                    duration: 3.5 + d.delay * 0.3,
+                    delay: d.delay,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  whileHover={{ scale: 1.2 }}
+                  onClick={() => handleClick(d.quoteIdx, d.color)}
+                  title="click me!"
+                >
+                  <Comp color={d.color} />
+                </motion.button>
+              </div>
+            </div>
           );
         })}
       </div>

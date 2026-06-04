@@ -122,14 +122,14 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
+          className="text-gradient-birthday"
           style={{
             fontFamily: FONT,
             fontSize: "clamp(5.5rem, 22vw, 16rem)",
             fontWeight: 800,
             lineHeight: 0.88,
             letterSpacing: "-0.02em",
-            color: "#ffffff",
-            filter: "drop-shadow(0 0 60px rgba(255,255,255,0.12))",
+            filter: "drop-shadow(0 0 60px rgba(255,107,157,0.25))",
           }}
         >
           Tanu

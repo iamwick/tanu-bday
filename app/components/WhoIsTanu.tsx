@@ -6,11 +6,11 @@ import { motion, useInView } from "framer-motion";
 const FONT = "'Press Start 2P', monospace";
 
 const traits = [
-  { word: "Kind.", delay: 0.1 },
-  { word: "Emotional.", delay: 0.2 },
-  { word: "Stubborn.", delay: 0.3 },
-  { word: "Thoughtful.", delay: 0.4 },
-  { word: "Hopeful.", delay: 0.5 },
+  { word: "Kind.", delay: 0.1, color: "#ff6b9d" },
+  { word: "Emotional.", delay: 0.2, color: "#c084fc" },
+  { word: "Stubborn.", delay: 0.3, color: "#fbbf24" },
+  { word: "Thoughtful.", delay: 0.4, color: "#34d399" },
+  { word: "Hopeful.", delay: 0.5, color: "#60a5fa" },
 ];
 
 const descriptions = [
@@ -43,12 +43,14 @@ export default function WhoIsTanu() {
           }}>
             The Story Begins With
           </p>
-          <h2 style={{
-            fontFamily: FONT,
-            fontSize: "clamp(2.5rem, 7vw, 5rem)",
-            fontWeight: 700,
-            color: "#ffffff",
-          }}>
+          <h2
+            className="text-gradient-birthday"
+            style={{
+              fontFamily: FONT,
+              fontSize: "clamp(2.5rem, 7vw, 5rem)",
+              fontWeight: 700,
+            }}
+          >
             Who Is Tanu?
           </h2>
         </motion.div>
@@ -77,7 +79,8 @@ export default function WhoIsTanu() {
                 fontFamily: FONT,
                 fontSize: "clamp(1.2rem, 3vw, 1.6rem)",
                 fontWeight: 600,
-                color: "rgba(255,255,255,0.85)",
+                color: trait.color,
+                textShadow: `0 0 20px ${trait.color}60`,
               }}>
                 {trait.word}
               </span>

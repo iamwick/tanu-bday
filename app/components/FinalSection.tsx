@@ -131,12 +131,13 @@ export default function FinalSection({ onReplay }: { onReplay: () => void }) {
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, ease: "easeOut" }}
+                  className={i === 5 ? "text-gradient-birthday" : i === 4 ? "text-gradient-birthday-warm" : ""}
                   style={{
                     fontFamily: FONT,
                     fontSize: i === 5 ? "clamp(3rem, 14vw, 6rem)" : i === 4 ? "clamp(1.8rem, 5vw, 2.5rem)" : "clamp(1rem, 3vw, 1.4rem)",
                     fontWeight: i === 5 ? 800 : i === 4 ? 700 : i === 3 ? 300 : 400,
                     fontStyle: i === 6 ? "italic" : "normal",
-                    color: i === 5 ? "#ffffff" : i === 4 ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.6)",
+                    color: (i === 5 || i === 4) ? undefined : i === 6 ? "#c084fc" : "rgba(255,255,255,0.6)",
                     lineHeight: i === 5 ? 0.9 : 1.5,
                     letterSpacing: i === 5 ? "-0.02em" : "0",
                   }}
