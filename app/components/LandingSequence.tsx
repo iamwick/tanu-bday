@@ -111,7 +111,10 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
       : windowWidth < 768
       ? "calc(50% - 290px)"
       : "calc(50% - 360px)";
-  const cakeTop = windowWidth > 0 && windowWidth < 768 ? "72%" : "50%";
+  const isMobileCake = windowWidth > 0 && windowWidth < 768;
+  const cakePositionStyle = isMobileCake
+    ? { bottom: "0px", top: "auto", transform: "none" }
+    : { top: "50%", bottom: "auto", transform: "translateY(-50%)" };
 
   const handleBegin = useCallback(() => {
     onBegin?.();
@@ -195,7 +198,7 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.4, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ position: "absolute", left: cakeOffset, top: cakeTop, transform: "translateY(-50%)", zIndex: 20 }}
+                  style={{ position: "absolute", left: cakeOffset, ...cakePositionStyle, zIndex: 20 }}
                 >
                   <CakeSVG flip={false} size={cakeSize} />
                 </motion.div>
@@ -205,7 +208,7 @@ export default function LandingSequence({ onComplete, onBegin }: LandingSequence
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.4, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ position: "absolute", right: cakeOffset, top: cakeTop, transform: "translateY(-50%)", zIndex: 20 }}
+                  style={{ position: "absolute", right: cakeOffset, ...cakePositionStyle, zIndex: 20 }}
                 >
                   <CakeSVG flip={true} size={cakeSize} />
                 </motion.div>
