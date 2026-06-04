@@ -141,8 +141,8 @@ export default function CatCompanion() {
 
         <motion.button
           onClick={handleCatClick}
-          className="pointer-events-auto w-16 h-16 flex items-center justify-center text-5xl cursor-pointer select-none"
-          animate={{ y: [0, -4, 0] }}
+          className="pointer-events-auto w-28 h-28 flex items-center justify-center text-8xl cursor-pointer select-none"
+          animate={{ y: [0, -6, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           title="pet me"
         >

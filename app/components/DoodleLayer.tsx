@@ -22,6 +22,22 @@ const QUOTES = [
   { cat: "ฅ^-ω-^ฅ", text: "Her laugh is the best sound in any room" },
   { cat: "(=^.^=)/", text: "Makes the world softer just by being in it" },
   { cat: "~(=^ ^=)", text: "Somehow makes everyone feel like the most important person" },
+  { cat: "=^•ω•^=", text: "Radiates main character energy without even trying" },
+  { cat: "ฅ(^ᵕ^)ฅ", text: "Probably has 47 tabs open and knows what's in each one" },
+  { cat: "(^•ㅅ•^)", text: "The person you call when everything feels impossible" },
+  { cat: "~(=^◡^=)", text: "Her kindness is not a weakness — it's a superpower" },
+  { cat: "ฅ^⊙ω⊙^ฅ", text: "Makes 26 look like the coolest age to be" },
+  { cat: "(=^ω^=)", text: "Her playlists go so hard it should be illegal" },
+  { cat: "^(=•ω•=)^", text: "Lowkey the reason several people have better taste now" },
+  { cat: "ฅ(=^◕ᴥ◕^=)", text: "Genuinely irreplaceable — not just because of the snacks" },
+  { cat: "(^˘ᵕ˘^)", text: "The world is statistically better with her in it" },
+  { cat: "~(=^‿^)", text: "Should come with a warning: may cause uncontrollable happiness" },
+  { cat: "(=^._.^)", text: "Always the vibe. Never the villain." },
+  { cat: "ฅ^•̀ω•́^ฅ", text: "Chapter 26: the plot thickens and it's brilliant" },
+  { cat: "(^ↀᴥↀ^)", text: "A whole mood, a whole era, a whole personality" },
+  { cat: "~(=^♡^=)", text: "The girl who turned caring into an art form" },
+  { cat: "ฅ(^◡^)ฅ", text: "If she wrote a book, everyone would cry the best tears" },
+  { cat: "(=^-.-^=)", text: "Still somehow everyone's favorite person in every room" },
 ];
 
 // --- SVG Doodles ---
@@ -311,24 +327,60 @@ interface DoodleConfig {
 }
 
 const DOODLES: DoodleConfig[] = [
-  // Left side
-  { id: 0,  type: "cat",       color: "#ff9ed2", pos: { left: "2vw",   top: "10%" }, rotate: -12, delay: 0.0, quoteIdx: 0  },
-  { id: 1,  type: "flower",    color: "#fde68a", pos: { left: "3.5vw", top: "20%" }, rotate:   8, delay: 0.2, quoteIdx: 1  },
-  { id: 2,  type: "bunny",     color: "#c4b5fd", pos: { left: "1.5vw", top: "32%" }, rotate:  -5, delay: 0.4, quoteIdx: 2  },
-  { id: 3,  type: "snail",     color: "#86efac", pos: { left: "3vw",   top: "44%" }, rotate:   0, delay: 0.6, quoteIdx: 3  },
-  { id: 4,  type: "mushroom",  color: "#fca5a5", pos: { left: "2vw",   top: "56%" }, rotate:  10, delay: 0.8, quoteIdx: 4  },
-  { id: 5,  type: "heart",     color: "#fb7185", pos: { left: "4vw",   top: "66%" }, rotate:  -8, delay: 1.0, quoteIdx: 5  },
-  { id: 6,  type: "moon",      color: "#a78bfa", pos: { left: "1.5vw", top: "76%" }, rotate:   5, delay: 1.2, quoteIdx: 6  },
-  { id: 7,  type: "jellyfish", color: "#67e8f9", pos: { left: "3vw",   top: "87%" }, rotate:  -3, delay: 1.4, quoteIdx: 7  },
-  // Right side
-  { id: 8,  type: "dog",       color: "#fdba74", pos: { right: "2vw",   top: "14%" }, rotate:  10, delay: 0.1, quoteIdx: 8  },
-  { id: 9,  type: "bird",      color: "#6ee7b7", pos: { right: "3.5vw", top: "25%" }, rotate:  -8, delay: 0.3, quoteIdx: 9  },
-  { id: 10, type: "fish",      color: "#5eead4", pos: { right: "1.5vw", top: "37%" }, rotate:   5, delay: 0.5, quoteIdx: 10 },
-  { id: 11, type: "butterfly", color: "#f9a8d4", pos: { right: "2.5vw", top: "49%" }, rotate: -12, delay: 0.7, quoteIdx: 11 },
-  { id: 12, type: "frog",      color: "#4ade80", pos: { right: "1.5vw", top: "60%" }, rotate:   8, delay: 0.9, quoteIdx: 12 },
-  { id: 13, type: "star",      color: "#fde047", pos: { right: "4vw",   top: "71%" }, rotate:  15, delay: 1.1, quoteIdx: 13 },
-  { id: 14, type: "hedgehog",  color: "#fed7aa", pos: { right: "2vw",   top: "81%" }, rotate:  -5, delay: 1.3, quoteIdx: 14 },
-  { id: 15, type: "cloud",     color: "#bae6fd", pos: { right: "3vw",   top: "91%" }, rotate:   3, delay: 1.5, quoteIdx: 15 },
+  // Left edge
+  { id: 0,  type: "cat",       color: "#ff9ed2", pos: { left: "2vw",   top: "10%" }, rotate: -12, delay: 0.0,  quoteIdx: 0  },
+  { id: 1,  type: "flower",    color: "#fde68a", pos: { left: "3.5vw", top: "20%" }, rotate:   8, delay: 0.2,  quoteIdx: 1  },
+  { id: 2,  type: "bunny",     color: "#c4b5fd", pos: { left: "1.5vw", top: "32%" }, rotate:  -5, delay: 0.4,  quoteIdx: 2  },
+  { id: 3,  type: "snail",     color: "#86efac", pos: { left: "3vw",   top: "44%" }, rotate:   0, delay: 0.6,  quoteIdx: 3  },
+  { id: 4,  type: "mushroom",  color: "#fca5a5", pos: { left: "2vw",   top: "56%" }, rotate:  10, delay: 0.8,  quoteIdx: 4  },
+  { id: 5,  type: "heart",     color: "#fb7185", pos: { left: "4vw",   top: "66%" }, rotate:  -8, delay: 1.0,  quoteIdx: 5  },
+  { id: 6,  type: "moon",      color: "#a78bfa", pos: { left: "1.5vw", top: "76%" }, rotate:   5, delay: 1.2,  quoteIdx: 6  },
+  { id: 7,  type: "jellyfish", color: "#67e8f9", pos: { left: "3vw",   top: "87%" }, rotate:  -3, delay: 1.4,  quoteIdx: 7  },
+  // Right edge
+  { id: 8,  type: "dog",       color: "#fdba74", pos: { right: "2vw",   top: "14%" }, rotate:  10, delay: 0.1,  quoteIdx: 8  },
+  { id: 9,  type: "bird",      color: "#6ee7b7", pos: { right: "3.5vw", top: "25%" }, rotate:  -8, delay: 0.3,  quoteIdx: 9  },
+  { id: 10, type: "fish",      color: "#5eead4", pos: { right: "1.5vw", top: "37%" }, rotate:   5, delay: 0.5,  quoteIdx: 10 },
+  { id: 11, type: "butterfly", color: "#f9a8d4", pos: { right: "2.5vw", top: "49%" }, rotate: -12, delay: 0.7,  quoteIdx: 11 },
+  { id: 12, type: "frog",      color: "#4ade80", pos: { right: "1.5vw", top: "60%" }, rotate:   8, delay: 0.9,  quoteIdx: 12 },
+  { id: 13, type: "star",      color: "#fde047", pos: { right: "4vw",   top: "71%" }, rotate:  15, delay: 1.1,  quoteIdx: 13 },
+  { id: 14, type: "hedgehog",  color: "#fed7aa", pos: { right: "2vw",   top: "81%" }, rotate:  -5, delay: 1.3,  quoteIdx: 14 },
+  { id: 15, type: "cloud",     color: "#bae6fd", pos: { right: "3vw",   top: "91%" }, rotate:   3, delay: 1.5,  quoteIdx: 15 },
+  // Left edge extras (filling gaps)
+  { id: 16, type: "star",      color: "#fde047", pos: { left: "3vw",   top: "3%"  }, rotate: -15, delay: 0.15, quoteIdx: 16 },
+  { id: 17, type: "butterfly", color: "#f9a8d4", pos: { left: "2.5vw", top: "38%" }, rotate:  10, delay: 0.45, quoteIdx: 17 },
+  { id: 18, type: "bird",      color: "#6ee7b7", pos: { left: "2vw",   top: "50%" }, rotate: -10, delay: 0.65, quoteIdx: 18 },
+  { id: 19, type: "dog",       color: "#fdba74", pos: { left: "4vw",   top: "62%" }, rotate:  12, delay: 0.85, quoteIdx: 19 },
+  { id: 20, type: "fish",      color: "#5eead4", pos: { left: "2.5vw", top: "95%" }, rotate:  -6, delay: 1.6,  quoteIdx: 20 },
+  // Right edge extras (filling gaps)
+  { id: 21, type: "flower",    color: "#fde68a", pos: { right: "3.5vw", top: "7%"  }, rotate:  12, delay: 0.25, quoteIdx: 21 },
+  { id: 22, type: "cat",       color: "#ff9ed2", pos: { right: "2vw",   top: "32%" }, rotate: -12, delay: 0.55, quoteIdx: 22 },
+  { id: 23, type: "mushroom",  color: "#fca5a5", pos: { right: "4vw",   top: "43%" }, rotate:   8, delay: 0.75, quoteIdx: 23 },
+  { id: 24, type: "snail",     color: "#86efac", pos: { right: "2.5vw", top: "55%" }, rotate:  -5, delay: 0.95, quoteIdx: 24 },
+  { id: 25, type: "bunny",     color: "#c4b5fd", pos: { right: "3vw",   top: "96%" }, rotate:   8, delay: 1.65, quoteIdx: 25 },
+  // Inner left (7–12vw)
+  { id: 26, type: "moon",      color: "#a78bfa", pos: { left: "9vw",   top: "8%"  }, rotate:  20, delay: 0.3,  quoteIdx: 26 },
+  { id: 27, type: "jellyfish", color: "#67e8f9", pos: { left: "8vw",   top: "30%" }, rotate: -15, delay: 0.55, quoteIdx: 27 },
+  { id: 28, type: "heart",     color: "#fb7185", pos: { left: "10vw",  top: "52%" }, rotate:   5, delay: 0.9,  quoteIdx: 28 },
+  { id: 29, type: "cloud",     color: "#bae6fd", pos: { left: "7vw",   top: "74%" }, rotate:  -8, delay: 1.2,  quoteIdx: 29 },
+  { id: 30, type: "frog",      color: "#4ade80", pos: { left: "11vw",  top: "90%" }, rotate:  15, delay: 1.55, quoteIdx: 30 },
+  // Inner right (7–12vw)
+  { id: 31, type: "hedgehog",  color: "#fed7aa", pos: { right: "9vw",  top: "15%" }, rotate: -10, delay: 0.4,  quoteIdx: 31 },
+  { id: 32, type: "dog",       color: "#fdba74", pos: { right: "8vw",  top: "40%" }, rotate:  18, delay: 0.7,  quoteIdx: 0  },
+  { id: 33, type: "star",      color: "#fde047", pos: { right: "11vw", top: "63%" }, rotate:  -8, delay: 1.05, quoteIdx: 1  },
+  { id: 34, type: "fish",      color: "#5eead4", pos: { right: "7vw",  top: "78%" }, rotate: -12, delay: 1.35, quoteIdx: 2  },
+  { id: 35, type: "butterfly", color: "#f9a8d4", pos: { right: "10vw", top: "95%" }, rotate:  10, delay: 1.7,  quoteIdx: 3  },
+  // Mid-left (15–22vw)
+  { id: 36, type: "flower",    color: "#fde68a", pos: { left: "16vw",  top: "5%"  }, rotate: -20, delay: 0.2,  quoteIdx: 4  },
+  { id: 37, type: "mushroom",  color: "#fca5a5", pos: { left: "18vw",  top: "28%" }, rotate:  12, delay: 0.5,  quoteIdx: 5  },
+  { id: 38, type: "bunny",     color: "#c4b5fd", pos: { left: "15vw",  top: "55%" }, rotate:  -8, delay: 0.85, quoteIdx: 6  },
+  { id: 39, type: "moon",      color: "#a78bfa", pos: { left: "20vw",  top: "78%" }, rotate:  15, delay: 1.15, quoteIdx: 7  },
+  { id: 40, type: "snail",     color: "#86efac", pos: { left: "17vw",  top: "93%" }, rotate:  -5, delay: 1.6,  quoteIdx: 8  },
+  // Mid-right (15–22vw from right)
+  { id: 41, type: "jellyfish", color: "#67e8f9", pos: { right: "16vw", top: "18%" }, rotate:  10, delay: 0.35, quoteIdx: 9  },
+  { id: 42, type: "heart",     color: "#fb7185", pos: { right: "19vw", top: "45%" }, rotate: -15, delay: 0.65, quoteIdx: 10 },
+  { id: 43, type: "frog",      color: "#4ade80", pos: { right: "15vw", top: "68%" }, rotate:  12, delay: 1.0,  quoteIdx: 11 },
+  { id: 44, type: "bird",      color: "#6ee7b7", pos: { right: "21vw", top: "88%" }, rotate:  -8, delay: 1.4,  quoteIdx: 12 },
+  { id: 45, type: "cloud",     color: "#bae6fd", pos: { right: "17vw", top: "3%"  }, rotate:   5, delay: 0.1,  quoteIdx: 13 },
 ];
 
 // --- Component ---
@@ -356,10 +408,11 @@ export default function DoodleLayer() {
         {DOODLES.map((d) => {
           const Comp = DOODLE_COMPONENTS[d.type];
           const isRight = "right" in d.pos;
+          const wrapClass = isRight ? "doodle-wrap-right" : "doodle-wrap";
           return (
             <div
               key={d.id}
-              className={isRight ? "doodle-wrap-right" : "doodle-wrap"}
+              className={wrapClass}
               style={{
                 position: "absolute",
                 ...d.pos,

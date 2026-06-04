@@ -132,21 +132,25 @@ body {
 
 /* Doodle layer — responsive scaling */
 .doodle-wrap {
-  transform: scale(0.5);
+  transform: scale(0.65);
   transform-origin: left top;
 }
 .doodle-wrap-right {
-  transform: scale(0.5);
+  transform: scale(0.65);
   transform-origin: right top;
 }
+.doodle-wrap-mid {
+  transform: scale(0.65);
+  transform-origin: left top;
+}
 @media (min-width: 640px) {
-  .doodle-wrap, .doodle-wrap-right {
-    transform: scale(0.7);
+  .doodle-wrap, .doodle-wrap-right, .doodle-wrap-mid {
+    transform: scale(0.95);
   }
 }
 @media (min-width: 1280px) {
-  .doodle-wrap, .doodle-wrap-right {
-    transform: scale(1);
+  .doodle-wrap, .doodle-wrap-right, .doodle-wrap-mid {
+    transform: scale(1.4);
   }
 }
 
