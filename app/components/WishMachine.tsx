@@ -99,9 +99,10 @@ export default function WishMachine() {
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
+    const mobile = vw < 640;
 
     // --- Burst flowers from screen center ---
-    const burst: FlowerP[] = Array.from({ length: 70 }, () => {
+    const burst: FlowerP[] = Array.from({ length: mobile ? 30 : 70 }, () => {
       const angle = Math.random() * 2 * Math.PI;
       const dist = vw * (0.15 + Math.random() * 0.65);
       return {
@@ -112,14 +113,14 @@ export default function WishMachine() {
         yEnd: Math.sin(angle) * dist * 0.55,
         emoji: FLOWERS[Math.floor(Math.random() * FLOWERS.length)],
         size: 22 + Math.floor(Math.random() * 44),
-        duration: 1.0 + Math.random() * 2.0,
-        delay: Math.random() * 0.7,
+        duration: 1.0 + Math.random() * 1.2,
+        delay: Math.random() * 0.4,
         rotateEnd: (Math.random() - 0.5) * 720,
       };
     });
 
     // --- Rain flowers from top ---
-    const rain: FlowerP[] = Array.from({ length: 70 }, () => ({
+    const rain: FlowerP[] = Array.from({ length: mobile ? 30 : 70 }, () => ({
       id: globalId++,
       left: Math.random() * vw,
       top: -80,
@@ -127,13 +128,13 @@ export default function WishMachine() {
       yEnd: vh + 160,
       emoji: FLOWERS[Math.floor(Math.random() * FLOWERS.length)],
       size: 16 + Math.floor(Math.random() * 36),
-      duration: 2.5 + Math.random() * 3.5,
-      delay: Math.random() * 3.5,
+      duration: mobile ? 1.5 + Math.random() * 1.5 : 2.5 + Math.random() * 3.5,
+      delay: mobile ? Math.random() * 1.0 : Math.random() * 3.5,
       rotateEnd: (Math.random() - 0.5) * 360,
     }));
 
     // --- Doodles floating up from bottom ---
-    const newDoodles: DoodleP[] = Array.from({ length: 40 }, () => {
+    const newDoodles: DoodleP[] = Array.from({ length: mobile ? 20 : 40 }, () => {
       const startTop = vh + 40;
       return {
         id: globalId++,
@@ -141,8 +142,8 @@ export default function WishMachine() {
         top: startTop,
         char: DOODLES[Math.floor(Math.random() * DOODLES.length)],
         size: 14 + Math.floor(Math.random() * 24),
-        duration: 2.5 + Math.random() * 3,
-        delay: Math.random() * 2.5,
+        duration: mobile ? 1.2 + Math.random() * 1.2 : 2.5 + Math.random() * 3,
+        delay: mobile ? Math.random() * 0.8 : Math.random() * 2.5,
         color: `hsl(${Math.floor(Math.random() * 360)}, 100%, 70%)`,
         xDrift: (Math.random() - 0.5) * 140,
         yTravel: -(startTop + 120),
@@ -150,7 +151,7 @@ export default function WishMachine() {
     });
 
     // --- Pixel faces popping up all over screen ---
-    const newFaces: FaceP[] = Array.from({ length: 22 }, () => {
+    const newFaces: FaceP[] = Array.from({ length: mobile ? 10 : 22 }, () => {
       const f = PIXEL_FACES[Math.floor(Math.random() * PIXEL_FACES.length)];
       return {
         id: globalId++,
@@ -159,8 +160,8 @@ export default function WishMachine() {
         face: f.face,
         color: f.color,
         size: 7 + Math.floor(Math.random() * 9),
-        duration: 2.2 + Math.random() * 2.5,
-        delay: 0.1 + Math.random() * 2.2,
+        duration: mobile ? 1.2 + Math.random() * 1.2 : 2.2 + Math.random() * 2.5,
+        delay: mobile ? 0.05 + Math.random() * 0.8 : 0.1 + Math.random() * 2.2,
       };
     });
 
@@ -172,7 +173,7 @@ export default function WishMachine() {
       setFlowers([]);
       setDoodles([]);
       setFaces([]);
-    }, 8000);
+    }, mobile ? 4000 : 8000);
   }, []);
 
   const active = flowers.length > 0;
