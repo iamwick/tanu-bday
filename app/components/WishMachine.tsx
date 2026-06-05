@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 
 const FONT = "'Press Start 2P', monospace";
@@ -39,19 +39,53 @@ const PIXEL_FACES = [
   { face: "o(*^*)o", color: "#f472b6" },
 ];
 
+// CSS keyframes injected once — browser runs these on the compositor thread
+const KEYFRAMES = `
+@keyframes wm-burst {
+  0%   { transform: translate(0,0) scale(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.8) rotate(var(--r)); opacity: 0; }
+}
+@keyframes wm-rain {
+  0%   { transform: translate(0,0) scale(0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 1; transform: translate(0,0) scale(1.1) rotate(0deg); }
+  85%  { opacity: 0.9; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.8) rotate(var(--r)); opacity: 0; }
+}
+@keyframes wm-float {
+  0%   { transform: translate(0,0) scale(0.2); opacity: 0; }
+  8%   { opacity: 1; transform: translate(0,0) scale(1.2); }
+  85%  { opacity: 0.85; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.7); opacity: 0; }
+}
+@keyframes wm-face {
+  0%   { transform: translateY(16px) scale(0); opacity: 0; }
+  12%  { transform: translateY(0) scale(1.5); opacity: 1; }
+  80%  { transform: translateY(-12px) scale(1); opacity: 1; }
+  100% { transform: translateY(-22px) scale(0.8); opacity: 0; }
+}
+`;
+
 let globalId = 0;
+const LINGER_MS = 10000;
+const MAX_FLOWERS = 200;
+const MAX_DOODLES = 100;
+const MAX_FACES = 50;
 
 interface FlowerP {
   id: number;
   left: number;
   top: number;
-  xEnd: number;
-  yEnd: number;
+  tx: number;
+  ty: number;
   emoji: string;
   size: number;
   duration: number;
   delay: number;
-  rotateEnd: number;
+  rotate: number;
+  kind: "burst" | "rain";
+  expireAt: number;
 }
 
 interface DoodleP {
@@ -63,8 +97,9 @@ interface DoodleP {
   duration: number;
   delay: number;
   color: string;
-  xDrift: number;
-  yTravel: number;
+  tx: number;
+  ty: number;
+  expireAt: number;
 }
 
 interface FaceP {
@@ -76,6 +111,7 @@ interface FaceP {
   size: number;
   duration: number;
   delay: number;
+  expireAt: number;
 }
 
 export default function WishMachine() {
@@ -83,112 +119,140 @@ export default function WishMachine() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [currentWish, setCurrentWish] = useState<string | null>(null);
   const [wishCount, setWishCount] = useState(0);
+  const wishCountRef = useRef(0);
   const [flowers, setFlowers] = useState<FlowerP[]>([]);
   const [doodles, setDoodles] = useState<DoodleP[]>([]);
   const [faces, setFaces] = useState<FaceP[]>([]);
   const [flashOn, setFlashOn] = useState(false);
 
+  // Clean up expired particles every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = Date.now();
+      setFlowers((prev) => prev.filter((f) => f.expireAt > now));
+      setDoodles((prev) => prev.filter((d) => d.expireAt > now));
+      setFaces((prev) => prev.filter((f) => f.expireAt > now));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const makeWish = useCallback(() => {
     const wish = wishes[Math.floor(Math.random() * wishes.length)];
     setCurrentWish(wish);
-    setWishCount((c) => c + 1);
+    wishCountRef.current += 1;
+    const pressNum = wishCountRef.current;
+    setWishCount(pressNum);
 
-    // Screen flash
     setFlashOn(true);
     setTimeout(() => setFlashOn(false), 500);
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const mobile = vw < 640;
+    const expireAt = Date.now() + LINGER_MS;
 
-    // --- Burst flowers from screen center ---
-    const burst: FlowerP[] = Array.from({ length: mobile ? 30 : 70 }, () => {
+    // Scale gently — max 3x at press 10
+    const scale = 1 + (Math.min(pressNum, 10) - 1) * 0.22;
+    const burstCount  = Math.round((mobile ? 12 : 22) * scale);
+    const rainCount   = Math.round((mobile ? 12 : 22) * scale);
+    const doodleCount = Math.round((mobile ? 8  : 14) * scale);
+    const faceCount   = Math.round((mobile ? 4  : 8)  * scale);
+
+    const burst: FlowerP[] = Array.from({ length: burstCount }, () => {
       const angle = Math.random() * 2 * Math.PI;
-      const dist = vw * (0.15 + Math.random() * 0.65);
+      const dist = vw * (0.15 + Math.random() * 0.6);
       return {
         id: globalId++,
         left: vw * 0.5,
         top: vh * 0.5,
-        xEnd: Math.cos(angle) * dist,
-        yEnd: Math.sin(angle) * dist * 0.55,
+        tx: Math.cos(angle) * dist,
+        ty: Math.sin(angle) * dist * 0.55,
         emoji: FLOWERS[Math.floor(Math.random() * FLOWERS.length)],
-        size: 22 + Math.floor(Math.random() * 44),
-        duration: 1.0 + Math.random() * 1.2,
-        delay: Math.random() * 0.4,
-        rotateEnd: (Math.random() - 0.5) * 720,
+        size: 40 + Math.floor(Math.random() * 55),
+        duration: 1.0 + Math.random() * 1.0,
+        delay: Math.random() * 0.3,
+        rotate: (Math.random() - 0.5) * 720,
+        kind: "burst",
+        expireAt,
       };
     });
 
-    // --- Rain flowers from top ---
-    const rain: FlowerP[] = Array.from({ length: mobile ? 30 : 70 }, () => ({
+    const rain: FlowerP[] = Array.from({ length: rainCount }, () => ({
       id: globalId++,
       left: Math.random() * vw,
       top: -80,
-      xEnd: (Math.random() - 0.5) * 200,
-      yEnd: vh + 160,
+      tx: (Math.random() - 0.5) * 160,
+      ty: vh + 160,
       emoji: FLOWERS[Math.floor(Math.random() * FLOWERS.length)],
-      size: 16 + Math.floor(Math.random() * 36),
-      duration: mobile ? 1.5 + Math.random() * 1.5 : 2.5 + Math.random() * 3.5,
-      delay: mobile ? Math.random() * 1.0 : Math.random() * 3.5,
-      rotateEnd: (Math.random() - 0.5) * 360,
+      size: 30 + Math.floor(Math.random() * 48),
+      duration: mobile ? 1.5 + Math.random() * 1.5 : 2.5 + Math.random() * 3.0,
+      delay: mobile ? Math.random() * 0.8 : Math.random() * 3.0,
+      rotate: (Math.random() - 0.5) * 360,
+      kind: "rain" as const,
+      expireAt,
     }));
 
-    // --- Doodles floating up from bottom ---
-    const newDoodles: DoodleP[] = Array.from({ length: mobile ? 20 : 40 }, () => {
+    const newDoodles: DoodleP[] = Array.from({ length: doodleCount }, () => {
       const startTop = vh + 40;
       return {
         id: globalId++,
         left: Math.random() * vw,
         top: startTop,
         char: DOODLES[Math.floor(Math.random() * DOODLES.length)],
-        size: 14 + Math.floor(Math.random() * 24),
-        duration: mobile ? 1.2 + Math.random() * 1.2 : 2.5 + Math.random() * 3,
-        delay: mobile ? Math.random() * 0.8 : Math.random() * 2.5,
+        size: 26 + Math.floor(Math.random() * 32),
+        duration: mobile ? 1.2 + Math.random() * 1.0 : 2.5 + Math.random() * 2.5,
+        delay: mobile ? Math.random() * 0.6 : Math.random() * 2.0,
         color: `hsl(${Math.floor(Math.random() * 360)}, 100%, 70%)`,
-        xDrift: (Math.random() - 0.5) * 140,
-        yTravel: -(startTop + 120),
+        tx: (Math.random() - 0.5) * 120,
+        ty: -(startTop + 100),
+        expireAt,
       };
     });
 
-    // --- Pixel faces popping up all over screen ---
-    const newFaces: FaceP[] = Array.from({ length: mobile ? 10 : 22 }, () => {
+    const newFaces: FaceP[] = Array.from({ length: faceCount }, () => {
       const f = PIXEL_FACES[Math.floor(Math.random() * PIXEL_FACES.length)];
       return {
         id: globalId++,
         left: vw * (0.02 + Math.random() * 0.90),
-        top: vh * (0.03 + Math.random() * 0.86),
+        top: vh * (0.05 + Math.random() * 0.82),
         face: f.face,
         color: f.color,
-        size: 7 + Math.floor(Math.random() * 9),
-        duration: mobile ? 1.2 + Math.random() * 1.2 : 2.2 + Math.random() * 2.5,
-        delay: mobile ? 0.05 + Math.random() * 0.8 : 0.1 + Math.random() * 2.2,
+        size: 13 + Math.floor(Math.random() * 14),
+        duration: mobile ? 1.2 + Math.random() * 1.0 : 2.0 + Math.random() * 2.0,
+        delay: mobile ? Math.random() * 0.6 : Math.random() * 2.0,
+        expireAt,
       };
     });
 
-    setFlowers([...burst, ...rain]);
-    setDoodles(newDoodles);
-    setFaces(newFaces);
-
-    setTimeout(() => {
-      setFlowers([]);
-      setDoodles([]);
-      setFaces([]);
-    }, mobile ? 4000 : 8000);
+    setFlowers((prev) => {
+      const next = [...prev, ...burst, ...rain];
+      return next.length > MAX_FLOWERS ? next.slice(next.length - MAX_FLOWERS) : next;
+    });
+    setDoodles((prev) => {
+      const next = [...prev, ...newDoodles];
+      return next.length > MAX_DOODLES ? next.slice(next.length - MAX_DOODLES) : next;
+    });
+    setFaces((prev) => {
+      const next = [...prev, ...newFaces];
+      return next.length > MAX_FACES ? next.slice(next.length - MAX_FACES) : next;
+    });
   }, []);
 
-  const active = flowers.length > 0;
+  const active = flowers.length > 0 || doodles.length > 0 || faces.length > 0;
 
   return (
     <>
+      {/* Inject keyframes once */}
+      <style>{KEYFRAMES}</style>
+
       {/* ── Full-viewport particle layer ── */}
       {active && (
         <div
           className="fixed inset-0 pointer-events-none overflow-hidden"
           style={{ zIndex: 9999 }}
         >
-          {/* Flowers */}
           {flowers.map((f) => (
-            <motion.div
+            <div
               key={f.id}
               style={{
                 position: "absolute",
@@ -196,24 +260,19 @@ export default function WishMachine() {
                 top: f.top,
                 fontSize: f.size,
                 lineHeight: 1,
+                willChange: "transform, opacity",
+                ["--tx" as string]: `${f.tx}px`,
+                ["--ty" as string]: `${f.ty}px`,
+                ["--r"  as string]: `${f.rotate}deg`,
+                animation: `${f.kind === "burst" ? "wm-burst" : "wm-rain"} ${f.duration}s ${f.delay}s ease-out both`,
               }}
-              initial={{ x: 0, y: 0, scale: 0, rotate: 0, opacity: 0 }}
-              animate={{
-                x: f.xEnd,
-                y: f.yEnd,
-                scale: [0, 1.6, 1.1, 0.9],
-                rotate: f.rotateEnd,
-                opacity: [0, 1, 1, 0],
-              }}
-              transition={{ duration: f.duration, delay: f.delay, ease: "easeOut" }}
             >
               {f.emoji}
-            </motion.div>
+            </div>
           ))}
 
-          {/* Doodles */}
           {doodles.map((d) => (
-            <motion.div
+            <div
               key={d.id}
               style={{
                 position: "absolute",
@@ -223,23 +282,18 @@ export default function WishMachine() {
                 fontSize: d.size,
                 color: d.color,
                 textShadow: "2px 2px 0 #000",
+                willChange: "transform, opacity",
+                ["--tx" as string]: `${d.tx}px`,
+                ["--ty" as string]: `${d.ty}px`,
+                animation: `wm-float ${d.duration}s ${d.delay}s ease-in-out both`,
               }}
-              initial={{ x: 0, y: 0, scale: 0.2, opacity: 0 }}
-              animate={{
-                y: d.yTravel,
-                x: d.xDrift,
-                scale: [0.2, 1.5, 1.1, 0.8],
-                opacity: [0, 1, 1, 0],
-              }}
-              transition={{ duration: d.duration, delay: d.delay, ease: "easeInOut" }}
             >
               {d.char}
-            </motion.div>
+            </div>
           ))}
 
-          {/* Pixel faces */}
           {faces.map((fc) => (
-            <motion.div
+            <div
               key={fc.id}
               style={{
                 position: "absolute",
@@ -250,17 +304,12 @@ export default function WishMachine() {
                 color: fc.color,
                 textShadow: "3px 3px 0 #000, -1px -1px 0 #000",
                 whiteSpace: "nowrap",
+                willChange: "transform, opacity",
+                animation: `wm-face ${fc.duration}s ${fc.delay}s ease-out both`,
               }}
-              initial={{ scale: 0, opacity: 0, y: 16 }}
-              animate={{
-                scale:   [0, 1.8, 1.2, 1.1, 1.0, 0],
-                opacity: [0, 1,   1,   1,   1,   0],
-                y:       [16, 0, -6, -10, -14, -22],
-              }}
-              transition={{ duration: fc.duration, delay: fc.delay, ease: "easeOut" }}
             >
               {fc.face}
-            </motion.div>
+            </div>
           ))}
         </div>
       )}
